@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 public class DatabaseController implements iDatabaseController
 {
-	private static final String URL = "jdbc:mysql://localhost:3306/mydb";
+	private static final String URL = "jdbc:mysql://localhost:3306/mydb?useSSL=false";
 	private static final String USER = "root";
 	private static final String PASSWORD = "root";
 
@@ -70,6 +70,7 @@ public class DatabaseController implements iDatabaseController
 		try
 		{
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+
 		}
 		catch(Exception exception)
 		{
