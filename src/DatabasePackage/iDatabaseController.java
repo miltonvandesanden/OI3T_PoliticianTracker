@@ -4,18 +4,17 @@ import VotingEntityPackage.iVotingEntity;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public interface iDatabaseController
 {
 	List<iVotingEntity> getVotingEntities();
 
-	iVotingEntity getVotingEntity(int votingEntityId) throws NoSuchElementException;
-	iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding) throws NoSuchElementException;
+	iVotingEntity getVotingEntity(int votingEntityId);
+	iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding);
 
-	iVotingEntity addVotingEntity(iVotingEntity votingEntity) throws Exception;
+	iVotingEntity addVotingEntity(iVotingEntity votingEntity);
 
-	iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity newVotingEntity) throws NoSuchElementException;
+	boolean deleteVotingEntity(int votingEntityId);
 
-	void deleteVotingEntity(int votingEntityId) throws NoSuchElementException;
+	iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity newVotingEntity);
 }

@@ -1,14 +1,18 @@
 package VotingEntityPackage;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public interface iVotingEntityController
 {
 	List<iVotingEntity> getVotingEntities();
-	iVotingEntity getVotingEntity(int votingEntityId) throws NoSuchElementException;
 
-	boolean addVotingEntity(iVotingEntity votingEntity);
-	void deleteVotingEntity(int votingEntityId);
-	boolean updateVotingEntity(int votingEntityId, iVotingEntity newVotingEntity);
+	iVotingEntity getVotingEntity(int votingEntityId);
+	iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding);
+
+	iVotingEntity addVotingEntity(iVotingEntity votingEntity);
+
+	boolean deleteVotingEntity(int votingEntityId);
+
+	iVotingEntity updateVotingEntity(int votingEntityId, iVotingEntity newVotingEntity);
 }

@@ -1,70 +1,72 @@
 package VotingEntityPackage;
 
+import DatabasePackage.iDatabaseController;
+
+import java.time.LocalDate;
 import java.util.*;
 
 public class VotingEntityController implements iVotingEntityController
 {
-	private List<iVotingEntity> votingEntities;
+	iDatabaseController databaseController;
 
-	public VotingEntityController()
+	public VotingEntityController(iDatabaseController databaseController)
 	{
-		votingEntities = new ArrayList<>();
+		this.databaseController = databaseController;
 	}
 
 	@Override
 	public List<iVotingEntity> getVotingEntities()
 	{
-		return votingEntities;
+		return databaseController.getVotingEntities();
 	}
 
 	@Override
-	public iVotingEntity getVotingEntity(int votingEntityId) throws NoSuchElementException
+	public iVotingEntity getVotingEntity(int votingEntityId)
 	{
-		for(iVotingEntity votingEntity : votingEntities)
+		return databaseController.getVotingEntity(votingEntityId);
+	}
+
+	@Override
+	public iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding)
+	{
+		return databaseController.getVotingEntity(name, dateOfFounding);
+	}
+
+	@Override
+	public iVotingEntity addVotingEntity(iVotingEntity votingEntity)
+	{
+		if(databaseController.getVotingEntity(votingEntity.getName(), votingEntity.getDateOfFounding()) != null)
 		{
-			if(votingEntity.getId() == votingEntityId)
-			{
-				return votingEntity;
-			}
+			return null;
 		}
 
-		throw new NoSuchElementException("Unable to locate votingEntity with id: " + votingEntityId);
+		return databaseController.addVotingEntity(votingEntity);
 	}
 
 	@Override
-	public boolean addVotingEntity(iVotingEntity newVotingEntity)
+	public boolean deleteVotingEntity(int votingEntityId)
 	{
-		for(iVotingEntity votingEntity : votingEntities)
+		if(databaseController.getVotingEntity(votingEntityId) == null)
 		{
-			if(votingEntity.getName().equals(newVotingEntity.getName()))
-			{
-				return false;
-			}
+			return false;
 		}
 
-		votingEntities.add(newVotingEntity);
-
-		return true;
+		return databaseController.deleteVotingEntity(votingEntityId);
 	}
 
 	@Override
-	public void deleteVotingEntity(int votingEntityId)
+	public iVotingEntity updateVotingEntity(int votingEntityId, iVotingEntity votingEntity)
 	{
-		ListIterator<iVotingEntity> votingEntitiesIterator = votingEntities.listIterator();
-
-		while(votingEntitiesIterator.hasNext())
+		if(databaseController.getVotingEntity(votingEntityId) == null)
 		{
-			if(votingEntitiesIterator.next().getId() == votingEntityId)
-			{
-				votingEntitiesIterator.remove();
-			}
+			return null;
 		}
-	}
 
-	@Override
-	public boolean updateVotingEntity(int votingEntityId, iVotingEntity newVotingEntity)
-	{
+		if(databaseController.getVotingEntity(votingEntity.getName(), votingEntity.getDateOfFounding()) != null)
+		{
+			return null;
+		}
 
-		return false;
+		return databaseController.setVotingEntity(votingEntityId, votingEntity);
 	}
 }
