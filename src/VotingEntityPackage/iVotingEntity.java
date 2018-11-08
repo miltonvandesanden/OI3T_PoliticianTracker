@@ -11,5 +11,5 @@ public interface iVotingEntity
 	void setName(String name);
 
 	LocalDate getDateOfFounding();
-	void setDateOfFounding(LocalDate dateOfFounding);
+	void setDateOfFounding(LocalDate dateOfFounding) throws IllegalArgumentException;
 }
