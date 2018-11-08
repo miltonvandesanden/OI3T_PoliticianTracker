@@ -3,7 +3,6 @@ package DatabasePackage;
 import VotingEntityPackage.VotingEntity;
 import VotingEntityPackage.iVotingEntity;
 
-import java.awt.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class DatabaseController implements iDatabaseController
 	private static PreparedStatement preparedStatement;
 	private static ResultSet resultSet;
 
-	public static void main(String args[])
+	//public static void main(String args[])
 	{
 		DatabaseController databaseController = new DatabaseController();
 	}
@@ -65,56 +64,56 @@ public class DatabaseController implements iDatabaseController
 		}
 	}
 
-	private void open()
+	private boolean open()
 	{
+		boolean success = false;
+
 		try
 		{
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
-
+			success = !connection.isClosed();
 		}
 		catch(Exception exception)
 		{
+			success = false;
 			System.out.println(exception);
 		}
+
+		return success;
 	}
 
-	private void close()
+	private boolean close()
 	{
+		boolean success = false;
+
 		try
 		{
 			if(!connection.isClosed())
 			{
 				connection.close();
 			}
-		}
-		catch (Exception exception)
-		{
-			//exception.printStackTrace();
-		}
 
-		try
-		{
 			if(!resultSet.isClosed())
 			{
 				resultSet.close();
 			}
-		}
-		catch(Exception exception)
-		{
-			//exception.printStackTrace();
-		}
 
-		try
-		{
 			if(!preparedStatement.isClosed())
 			{
 				preparedStatement.close();
 			}
+
+			if(connection.isClosed() && resultSet.isClosed() && preparedStatement.isClosed())
+			{
+				success = true;
+			}
 		}
 		catch(Exception exception)
 		{
-			//exception.printStackTrace();
+			exception.printStackTrace();
 		}
+
+		return success;
 	}
 
 	@Override
@@ -157,7 +156,7 @@ public class DatabaseController implements iDatabaseController
 	}
 
 	@Override
-	public iVotingEntity getVotingEntity(int votingEntityId) throws NoSuchElementException
+	public iVotingEntity getVotingEntity(int votingEntityId)
 	{
 		iVotingEntity votingEntity = null;
 
@@ -171,18 +170,10 @@ public class DatabaseController implements iDatabaseController
 			preparedStatement.setInt(1, votingEntityId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			if(!resultSet.first())
-			{
-				throw new NoSuchElementException("no votingEntity located with votingEntityId: " + votingEntityId);
-			}
-			else
+			if(resultSet.first())
 			{
 				votingEntity = new VotingEntity(votingEntityId, resultSet.getString("name"), resultSet.getDate("dateOfFounding").toLocalDate());
 			}
-		}
-		catch(NoSuchElementException noSuchElementException)
-		{
-			throw noSuchElementException;
 		}
 		catch(Exception exception)
 		{
@@ -204,7 +195,7 @@ public class DatabaseController implements iDatabaseController
 	}
 
 	@Override
-	public iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding) throws NoSuchElementException
+	public iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding)
 	{
 		iVotingEntity votingEntity = null;
 
@@ -219,18 +210,10 @@ public class DatabaseController implements iDatabaseController
 			preparedStatement.setDate(2, Date.valueOf(dateOfFounding));
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			if(!resultSet.first())
-			{
-				throw new NoSuchElementException("no votingEntity located with name: " + name + "and dateOfFounding: " + dateOfFounding.toString());
-			}
-			else
+			if(resultSet.first())
 			{
 				votingEntity = new VotingEntity(resultSet.getInt("idVotingEntity"), resultSet.getString("name"), resultSet.getDate("dateOfFounding").toLocalDate());
 			}
-		}
-		catch(NoSuchElementException noSuchElementException)
-		{
-			throw noSuchElementException;
 		}
 		catch(Exception exception)
 		{
@@ -252,10 +235,10 @@ public class DatabaseController implements iDatabaseController
 	}
 
 	@Override
-	public iVotingEntity addVotingEntity(iVotingEntity votingEntity) throws Exception //must be some specific FailedToAddException or something?
+	public iVotingEntity addVotingEntity(iVotingEntity votingEntity)// throws Exception //must be some specific FailedToAddException or something?
 	{
-		String query = "INSERT INTO votingentity (name, dateOfFounding) VALUES (?, ?);";
 		iVotingEntity result = null;
+		String query = "INSERT INTO votingentity (name, dateOfFounding) VALUES (?, ?);";
 
 		try
 		{
@@ -265,12 +248,10 @@ public class DatabaseController implements iDatabaseController
 			preparedStatement.setString(1, votingEntity.getName());
 			preparedStatement.setDate(2, Date.valueOf(votingEntity.getDateOfFounding()));
 
-			if(preparedStatement.executeUpdate() <= 0)
+			if(preparedStatement.executeUpdate() > 0)
 			{
-				throw new Exception("adding votingEntity failed");
+				result = getVotingEntity(votingEntity.getName(), votingEntity.getDateOfFounding());
 			}
-
-			result = getVotingEntity(votingEntity.getName(), votingEntity.getDateOfFounding());
 		}
 		catch(Exception exception)
 		{
@@ -292,10 +273,10 @@ public class DatabaseController implements iDatabaseController
 	}
 
 	@Override
-	public iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity votingEntity) throws NoSuchElementException
+	public iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity votingEntity)
 	{
-		String query = "UPDATE votingentity SET name=?, dateOfFounding=? WHERE idVotingEntity=?";
 		iVotingEntity result = null;
+		String query = "UPDATE votingentity SET name=?, dateOfFounding=? WHERE idVotingEntity=?";
 
 		try
 		{
@@ -306,16 +287,10 @@ public class DatabaseController implements iDatabaseController
 			preparedStatement.setDate(2, Date.valueOf(votingEntity.getDateOfFounding()));
 			preparedStatement.setInt(3, votingEntityId);
 
-			if(preparedStatement.executeUpdate() <= 0)
+			if(preparedStatement.executeUpdate() > 0)
 			{
-				throw new NoSuchElementException("votingEntity not deleted because votingEntity not located");
+				result = getVotingEntity(votingEntityId);
 			}
-
-			result = getVotingEntity(votingEntityId);
-		}
-		catch(NoSuchElementException noSuchElementException)
-		{
-			throw noSuchElementException;
 		}
 		catch(Exception exception)
 		{
@@ -337,8 +312,9 @@ public class DatabaseController implements iDatabaseController
 	}
 
 	@Override
-	public void deleteVotingEntity(int votingEntityId) throws NoSuchElementException
+	public boolean deleteVotingEntity(int votingEntityId)
 	{
+		boolean result = false;
 		String query = "DELETE FROM votingentity WHERE idVotingEntity=?";
 
 		try
@@ -348,17 +324,14 @@ public class DatabaseController implements iDatabaseController
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, votingEntityId);
 
-			if(preparedStatement.executeUpdate() <= 0)
+			if(preparedStatement.executeUpdate() > 0)
 			{
-				throw new NoSuchElementException("votingEntity not deleted because votingEntity not located");
+				result = true;
 			}
-		}
-		catch(NoSuchElementException noSuchElementException)
-		{
-			throw noSuchElementException;
 		}
 		catch(Exception exception)
 		{
+			result = false;
 			exception.printStackTrace();
 		}
 		finally
@@ -372,5 +345,7 @@ public class DatabaseController implements iDatabaseController
 				exception.printStackTrace();
 			}
 		}
+
+		return result;
 	}
 }

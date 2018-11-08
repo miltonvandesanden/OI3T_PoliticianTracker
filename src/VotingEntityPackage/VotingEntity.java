@@ -17,6 +17,7 @@ public class VotingEntity implements iVotingEntity
 
 	public VotingEntity(String name, LocalDate dateOfFounding)
 	{
+		id = -1;
 		this.name = name;
 		this.dateOfFounding = dateOfFounding;
 	}
@@ -46,7 +47,7 @@ public class VotingEntity implements iVotingEntity
 	}
 
 	@Override
-	public void setDateOfFounding(LocalDate dateOfFounding)
+	public void setDateOfFounding(LocalDate dateOfFounding) throws IllegalArgumentException
 	{
 		if(dateOfFounding.isAfter(LocalDate.now()))
 		{
