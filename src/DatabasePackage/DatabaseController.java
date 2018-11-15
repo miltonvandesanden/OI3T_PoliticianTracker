@@ -1,13 +1,11 @@
 package DatabasePackage;
 
-import VotingEntityPackage.VotingEntity;
-import VotingEntityPackage.iVotingEntity;
+import EntitiesPackage.*;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class DatabaseController implements iDatabaseController
 {
@@ -19,54 +17,11 @@ public class DatabaseController implements iDatabaseController
 	private static PreparedStatement preparedStatement;
 	private static ResultSet resultSet;
 
-	//public static void main(String args[])
-	{
-		DatabaseController databaseController = new DatabaseController();
-	}
-
-	public DatabaseController()
-	{
-		try
-		{
-			List<iVotingEntity> votingEntities = getVotingEntities();
-			System.out.println(votingEntities.size());
-
-			iVotingEntity votingEntity = getVotingEntity(1);
-			System.out.println(votingEntity.getName());
-
-			iVotingEntity newVotingEntity = new VotingEntity("testName2", LocalDate.of(1982, 2, 2));
-
-			iVotingEntity result1 = addVotingEntity(newVotingEntity);
-			System.out.println("VotingEntity added");
-			System.out.println(result1.getName());
-
-			iVotingEntity updatedVotingEntity = result1;
-			updatedVotingEntity.setName("testName3");
-			updatedVotingEntity.setDateOfFounding(LocalDate.of(1983, 3, 3));
-
-			iVotingEntity result2 = setVotingEntity(updatedVotingEntity.getId(), updatedVotingEntity);
-			System.out.println("VotingEntity updated");
-			System.out.println(result2.getName());
-
-			deleteVotingEntity(result2.getId());
-			System.out.println("VotingEntity deleted");
-
-			getVotingEntity(result2.getId());
-
-		}
-		catch(NoSuchElementException noSuchELementException)
-		{
-			System.out.println("See! deleted!");
-		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
-		}
-	}
+	public DatabaseController(){}
 
 	private boolean open()
 	{
-		boolean success = false;
+		boolean success;
 
 		try
 		{
@@ -76,7 +31,7 @@ public class DatabaseController implements iDatabaseController
 		catch(Exception exception)
 		{
 			success = false;
-			System.out.println(exception);
+			exception.printStackTrace();
 		}
 
 		return success;
@@ -235,8 +190,13 @@ public class DatabaseController implements iDatabaseController
 	}
 
 	@Override
-	public iVotingEntity addVotingEntity(iVotingEntity votingEntity)// throws Exception //must be some specific FailedToAddException or something?
+	public iVotingEntity addVotingEntity(iVotingEntity votingEntity)
 	{
+		if(getVotingEntity(votingEntity.getName(), votingEntity.getDateOfFounding()) != null)
+		{
+			return null;
+		}
+
 		iVotingEntity result = null;
 		String query = "INSERT INTO votingentity (name, dateOfFounding) VALUES (?, ?);";
 
@@ -275,6 +235,11 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity votingEntity)
 	{
+		if(getVotingEntity(votingEntityId) == null)
+		{
+			return null;
+		}
+
 		iVotingEntity result = null;
 		String query = "UPDATE votingentity SET name=?, dateOfFounding=? WHERE idVotingEntity=?";
 
@@ -314,6 +279,16 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public boolean deleteVotingEntity(int votingEntityId)
 	{
+		if(getVotingEntity(votingEntityId) == null)
+		{
+			return false;
+		}
+
+		if(!getStancesOfVotingEntity(votingEntityId).isEmpty())
+		{
+			return false;
+		}
+
 		boolean result = false;
 		String query = "DELETE FROM votingentity WHERE idVotingEntity=?";
 
@@ -347,5 +322,645 @@ public class DatabaseController implements iDatabaseController
 		}
 
 		return result;
+	}
+
+	@Override
+	public List<iIssue> getIssues()
+	{
+		List<iIssue> issues = new ArrayList<>();
+		String query = "SELECT * FROM issue";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				iIssue issue = new Issue(resultSet.getInt("idIssue"), resultSet.getString("name"), resultSet.getString("description"));
+
+				issues.add(issue);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return issues;
+	}
+
+	@Override
+	public iIssue getIssue(int issueId)
+	{
+		iIssue issue = null;
+		String query = "SELECT * FROM issue WHERE idIssue=?";
+
+		try
+		{
+			open();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, issueId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.first())
+			{
+				issue = new Issue(issueId, resultSet.getString("name"), resultSet.getString("description"));
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return issue;
+	}
+
+	@Override
+	public iIssue getIssue(String name, String description)
+	{
+		iIssue issue = null;
+
+		String query = "SELECT * FROM issue WHERE name=? AND description=?";
+
+		try
+		{
+			open();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, name);
+			preparedStatement.setString(2, description);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.first())
+			{
+				issue = new Issue(resultSet.getInt("issueId"), name, description);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return issue;
+	}
+
+	@Override
+	public iIssue addIssue(iIssue issue)
+	{
+		if(getIssue(issue.getName(), issue.getDescription()) != null)
+		{
+			return null;
+		}
+
+		iIssue result = null;
+		String query = "INSERT INTO issue (name, description) VALUES (?, ?);";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, issue.getName());
+			preparedStatement.setString(2, issue.getDescription());
+
+			if(preparedStatement.executeUpdate() > 0)
+			{
+				result = getIssue(issue.getName(), issue.getDescription());
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public iIssue setIssue(int issueId, iIssue issue)
+	{
+		if(getIssue(issueId) == null)
+		{
+			return null;
+		}
+
+		iIssue result = null;
+		String query = "UPDATE issue SET name=?, description=? WHERE idIssue=?";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, issue.getName());
+			preparedStatement.setString(2, issue.getDescription());
+			preparedStatement.setInt(3, issueId);
+
+			if(preparedStatement.executeUpdate() > 0)
+			{
+				result = getIssue(issueId);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean deleteIssue(int issueId)
+	{
+		if(getIssue(issueId) == null)
+		{
+			return false;
+		}
+
+		if(!getStancesOfIssue(issueId).isEmpty())
+		{
+			return false;
+		}
+
+		boolean success = false;
+		String query = "DELETE FROM issue WHERE idIssue=?";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, issueId);
+
+			if(preparedStatement.executeUpdate() > 0)
+			{
+				success = true;
+			}
+		}
+		catch(Exception exception)
+		{
+			success = false;
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return success;
+	}
+
+	@Override
+	public List<iStance> getStancesOfVotingEntity(int votingEntityId)
+	{
+		List<iStance> stances = new ArrayList<>();
+		String query = "SELECT * FROM stance WHERE VotingEntity_idVotingEntity=? ";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, votingEntityId);
+			resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				stances.add
+				(
+					new Stance
+					(
+							resultSet.getInt("idStance"),
+							resultSet.getInt("VotingEntity_idVotingEntity"),
+							resultSet.getInt("Issue_idIssue"),
+							resultSet.getBoolean("inFavor"),
+							resultSet.getDate("date").toLocalDate()
+					)
+				);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return stances;
+	}
+
+	@Override
+	public List<iStance> getStancesOfIssue(int issueId)
+	{
+		List<iStance> stances = new ArrayList<>();
+		String query = "SELECT * FROM stance WHERE Issue_idIssue=? ";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, issueId);
+			resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				stances.add
+				(
+					new Stance
+					(
+						resultSet.getInt("idStance"),
+						resultSet.getInt("VotingEntity_idVotingEntity"),
+						resultSet.getInt("Issue_idIssue"),
+						resultSet.getBoolean("inFavor"),
+						resultSet.getDate("date").toLocalDate()
+					)
+				);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return stances;
+	}
+
+	@Override
+	public List<iStance> getStancesOfVotingEntityAndIssue(int votingEntityId, int issueId)
+	{
+		List<iStance> stances = new ArrayList<>();
+		String query = "SELECT * FROM stance WHERE Issue_idIssue=? AND Issue_idIssue=?";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, votingEntityId);
+			preparedStatement.setInt(2, issueId);
+			resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				stances.add
+				(
+					new Stance
+					(
+						resultSet.getInt("idStance"),
+						resultSet.getInt("VotingEntity_idVotingEntity"),
+						resultSet.getInt("Issue_idIssue"),
+						resultSet.getBoolean("inFavor"),
+						resultSet.getDate("date").toLocalDate()
+					)
+				);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return stances;
+	}
+
+	@Override
+	public iStance getStance(int stanceId)
+	{
+		iStance stance = null;
+		String query = "SELECT * FROM stance WHERE idStance=?";
+
+		try
+		{
+			open();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, stanceId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.first())
+			{
+				stance = new Stance
+				(
+					resultSet.getInt("idStance"),resultSet.getInt("VotingEntity_idVotingEntity"),
+					resultSet.getInt("Issue_idIssue"),
+					resultSet.getBoolean("inFavor"),
+					resultSet.getDate("date").toLocalDate()
+				);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return stance;
+	}
+
+	@Override
+	public iStance getStance(int votingEntityId, int issueId, LocalDate date)
+	{
+		iStance stance = null;
+		String query = "SELECT * FROM stance WHERE VotingEntity_idVotingEntity=? AND Issue_idIssue=? AND date=?";
+
+		try
+		{
+			open();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, votingEntityId);
+			preparedStatement.setInt(2, issueId);
+			preparedStatement.setDate(1, Date.valueOf(date));
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.first())
+			{
+				stance = new Stance
+				(
+					resultSet.getInt("idStance"),resultSet.getInt("VotingEntity_idVotingEntity"),
+					resultSet.getInt("Issue_idIssue"),
+					resultSet.getBoolean("inFavor"),
+					resultSet.getDate("date").toLocalDate()
+				);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return stance;
+	}
+
+	@Override
+	public iStance addStance(iStance stance)
+	{
+		if(getVotingEntity(stance.getVotingEntityId()) == null)
+		{
+			return null;
+		}
+
+		if(getIssue(stance.getIssueId()) == null)
+		{
+			return null;
+		}
+
+		if(getStance(stance.getVotingEntityId(), stance.getIssueId(), stance.getDate()) != null)
+		{
+			return null;
+		}
+
+		iStance result = null;
+		String query = "INSERT INTO stance (VotingEntity_idVotingEntity, Issue_idIssue, inFavor, date) VALUES (?, ?, ?, ?);";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, stance.getVotingEntityId());
+			preparedStatement.setInt(2, stance.getIssueId());
+			preparedStatement.setBoolean(3, stance.getInFavor());
+			preparedStatement.setDate(4, Date.valueOf(stance.getDate()));
+
+			if(preparedStatement.executeUpdate() > 0)
+			{
+				result = getStance(stance.getVotingEntityId(), stance.getIssueId(), stance.getDate());
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public iStance setStance(int stanceId, iStance stance)
+	{
+		if(getStance(stanceId) == null)
+		{
+			return null;
+		}
+
+		if(getVotingEntity(stance.getVotingEntityId()) == null)
+		{
+			return null;
+		}
+
+		if(getIssue(stance.getIssueId()) == null)
+		{
+			return null;
+		}
+
+		iStance result = null;
+		String query = "UPDATE stance SET VotingEntity_idVotingEntity=?, Issue_idIssue=?, inFavor=?, date=? WHERE idStance=?";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, stance.getVotingEntityId());
+			preparedStatement.setInt(2, stance.getIssueId());
+			preparedStatement.setBoolean(3, stance.getInFavor());
+			preparedStatement.setDate(4, Date.valueOf(stance.getDate()));
+
+			if(preparedStatement.executeUpdate() > 0)
+			{
+				result = getStance(stanceId);
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean deleteStance(int stanceId)
+	{
+		if(getStance(stanceId) == null)
+		{
+			return false;
+		}
+
+		boolean success = false;
+		String query = "DELETE FROM stance WHERE idStance=?";
+
+		try
+		{
+			open();
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, stanceId);
+
+			if(preparedStatement.executeUpdate() > 0)
+			{
+				success = true;
+			}
+		}
+		catch(Exception exception)
+		{
+			success = false;
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				close();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+
+		return success;
 	}
 }

@@ -1,5 +1,7 @@
 package VotingEntityPackage;
 
+import EntitiesPackage.iVotingEntity;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,8 +13,6 @@ public interface iVotingEntityController
 	iVotingEntity getVotingEntity(String name, LocalDate dateOfFounding);
 
 	iVotingEntity addVotingEntity(iVotingEntity votingEntity);
-
+	iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity votingEntity);
 	boolean deleteVotingEntity(int votingEntityId);
-
-	iVotingEntity updateVotingEntity(int votingEntityId, iVotingEntity newVotingEntity);
 }

@@ -1,13 +1,14 @@
 package VotingEntityPackage;
 
 import DatabasePackage.iDatabaseController;
+import EntitiesPackage.iVotingEntity;
 
 import java.time.LocalDate;
 import java.util.*;
 
 public class VotingEntityController implements iVotingEntityController
 {
-	iDatabaseController databaseController;
+	private iDatabaseController databaseController;
 
 	public VotingEntityController(iDatabaseController databaseController)
 	{
@@ -44,18 +45,7 @@ public class VotingEntityController implements iVotingEntityController
 	}
 
 	@Override
-	public boolean deleteVotingEntity(int votingEntityId)
-	{
-		if(databaseController.getVotingEntity(votingEntityId) == null)
-		{
-			return false;
-		}
-
-		return databaseController.deleteVotingEntity(votingEntityId);
-	}
-
-	@Override
-	public iVotingEntity updateVotingEntity(int votingEntityId, iVotingEntity votingEntity)
+	public iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity votingEntity)
 	{
 		if(databaseController.getVotingEntity(votingEntityId) == null)
 		{
@@ -68,5 +58,16 @@ public class VotingEntityController implements iVotingEntityController
 		}
 
 		return databaseController.setVotingEntity(votingEntityId, votingEntity);
+	}
+
+	@Override
+	public boolean deleteVotingEntity(int votingEntityId)
+	{
+		if(databaseController.getVotingEntity(votingEntityId) == null)
+		{
+			return false;
+		}
+
+		return databaseController.deleteVotingEntity(votingEntityId);
 	}
 }
