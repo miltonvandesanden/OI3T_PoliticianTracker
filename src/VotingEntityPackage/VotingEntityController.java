@@ -1,5 +1,6 @@
 package VotingEntityPackage;
 
+import DatabasePackage.DatabaseController;
 import DatabasePackage.iDatabaseController;
 import EntitiesPackage.iVotingEntity;
 
@@ -10,9 +11,9 @@ public class VotingEntityController implements iVotingEntityController
 {
 	private iDatabaseController databaseController;
 
-	public VotingEntityController(iDatabaseController databaseController)
+	public VotingEntityController()
 	{
-		this.databaseController = databaseController;
+		databaseController = DatabaseController.getDatabaseController();
 	}
 
 	@Override

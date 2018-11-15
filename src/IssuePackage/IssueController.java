@@ -1,5 +1,6 @@
 package IssuePackage;
 
+import DatabasePackage.DatabaseController;
 import DatabasePackage.iDatabaseController;
 import EntitiesPackage.iIssue;
 
@@ -9,9 +10,9 @@ public class IssueController implements iIssueController
 {
 	private iDatabaseController databaseController;
 
-	public IssueController(iDatabaseController databaseController)
+	public IssueController()
 	{
-		this.databaseController = databaseController;
+		databaseController = DatabaseController.getDatabaseController();
 	}
 
 	@Override

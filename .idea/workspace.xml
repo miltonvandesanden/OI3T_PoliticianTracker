@@ -13,7 +13,7 @@
     <session id="-1218447321">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.27" value="1" />
@@ -27,7 +27,7 @@
         <counts>
           <entry key="class" value="3" />
           <entry key="iml" value="1" />
-          <entry key="java" value="86" />
+          <entry key="java" value="94" />
           <entry key="xml" value="2" />
         </counts>
       </usages-collector>
@@ -35,24 +35,126 @@
         <counts>
           <entry key="CLASS" value="3" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="86" />
+          <entry key="JAVA" value="94" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="16383" />
+          <entry key="java" value="17181" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="16383" />
+          <entry key="JAVA" value="17181" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/StancePackage/iStanceController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/StancePackage/StanceController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#383#384#0" expanded="true" />
+                <element signature="e#249#250#0" expanded="true" />
+                <element signature="e#267#268#0" expanded="true" />
+                <element signature="e#335#336#0" expanded="true" />
+                <element signature="e#353#354#0" expanded="true" />
+                <element signature="e#456#457#0" expanded="true" />
+                <element signature="e#474#475#0" expanded="true" />
+                <element signature="e#529#530#0" expanded="true" />
+                <element signature="e#547#548#0" expanded="true" />
+                <element signature="e#637#638#0" expanded="true" />
+                <element signature="e#655#656#0" expanded="true" />
+                <element signature="e#712#713#0" expanded="true" />
+                <element signature="e#730#731#0" expanded="true" />
+                <element signature="e#801#802#0" expanded="true" />
+                <element signature="e#819#820#0" expanded="true" />
+                <element signature="e#877#878#0" expanded="true" />
+                <element signature="e#896#897#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/DatabasePackage/DatabaseController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="101" column="9" lean-forward="true" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DatabasePackage/iDatabaseController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="143">
+              <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/IssuePackage/IssueController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#289#290#0" expanded="true" />
+                <element signature="e#320#321#0" expanded="true" />
+                <element signature="e#396#397#0" expanded="true" />
+                <element signature="e#440#441#0" expanded="true" />
+                <element signature="e#492#493#0" expanded="true" />
+                <element signature="e#542#543#0" expanded="true" />
+                <element signature="e#614#615#0" expanded="true" />
+                <element signature="e#674#675#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/VotingEntityPackage/VotingEntityController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#319#320#0" expanded="true" />
+                <element signature="e#348#349#0" expanded="true" />
+                <element signature="e#596#597#0" expanded="true" />
+                <element signature="e#660#661#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -84,14 +186,16 @@
         <option value="$PROJECT_DIR$/src/Entities/VotingEntity.java" />
         <option value="$PROJECT_DIR$/src/IssuePackage/iIssueController.java" />
         <option value="$PROJECT_DIR$/src/VotingEntityPackage/iVotingEntityController.java" />
-        <option value="$PROJECT_DIR$/src/VotingEntityPackage/VotingEntityController.java" />
-        <option value="$PROJECT_DIR$/src/IssuePackage/IssueController.java" />
         <option value="$PROJECT_DIR$/src/EntitiesPackage/iIssue.java" />
         <option value="$PROJECT_DIR$/src/EntitiesPackage/Issue.java" />
         <option value="$PROJECT_DIR$/src/EntitiesPackage/iVotingEntity.java" />
         <option value="$PROJECT_DIR$/src/EntitiesPackage/VotingEntity.java" />
         <option value="$PROJECT_DIR$/src/EntitiesPackage/Stance.java" />
         <option value="$PROJECT_DIR$/src/EntitiesPackage/iStance.java" />
+        <option value="$PROJECT_DIR$/src/StancePackage/iStanceController.java" />
+        <option value="$PROJECT_DIR$/src/IssuePackage/IssueController.java" />
+        <option value="$PROJECT_DIR$/src/VotingEntityPackage/VotingEntityController.java" />
+        <option value="$PROJECT_DIR$/src/StancePackage/StanceController.java" />
         <option value="$PROJECT_DIR$/src/DatabasePackage/iDatabaseController.java" />
         <option value="$PROJECT_DIR$/src/DatabasePackage/DatabaseController.java" />
       </list>
@@ -104,8 +208,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="973" />
-    <option name="width" value="634" />
+    <option name="x" value="-7" />
+    <option name="width" value="814" />
     <option name="height" value="867" />
   </component>
   <component name="ProjectView">
@@ -150,6 +254,12 @@
               <item name="OI3T_PoliticianTracker" type="b2602c69:ProjectViewProjectNode" />
               <item name="OI3T_PoliticianTracker" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="StancePackage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OI3T_PoliticianTracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OI3T_PoliticianTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="VotingEntityPackage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -161,7 +271,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542291602366" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542294446056" />
     <property name="last_opened_file_path" value="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.13.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -215,12 +325,12 @@
       <workItem from="1541071884097" duration="2143000" />
       <workItem from="1541688896850" duration="4080000" />
       <workItem from="1541693097545" duration="177000" />
-      <workItem from="1542120315995" duration="17949000" />
+      <workItem from="1542120315995" duration="20770000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54035000" />
+    <option name="totallyTimeSpent" value="56856000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -306,18 +416,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/VotingEntityPackage/VotingEntityController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#596#597#0" expanded="true" />
-            <element signature="e#660#661#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EntitiesPackage/iVotingEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -369,16 +467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DatabasePackage/iDatabaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="30" column="26" lean-forward="true" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EntitiesPackage/iIssue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -388,18 +476,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IssuePackage/iIssueController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DatabasePackage/DatabaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="944" column="13" lean-forward="true" selection-start-line="944" selection-start-column="13" selection-end-line="944" selection-end-column="13" />
+        <state relative-caret-position="136">
+          <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -408,18 +486,89 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/IssuePackage/IssueController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+        <state relative-caret-position="170">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#297#298#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
+            <element signature="e#289#290#0" expanded="true" />
+            <element signature="e#320#321#0" expanded="true" />
             <element signature="e#396#397#0" expanded="true" />
             <element signature="e#440#441#0" expanded="true" />
             <element signature="e#492#493#0" expanded="true" />
             <element signature="e#542#543#0" expanded="true" />
             <element signature="e#614#615#0" expanded="true" />
             <element signature="e#674#675#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DatabasePackage/iDatabaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/StancePackage/iStanceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/VotingEntityPackage/VotingEntityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#319#320#0" expanded="true" />
+            <element signature="e#348#349#0" expanded="true" />
+            <element signature="e#596#597#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/StancePackage/StanceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#383#384#0" expanded="true" />
+            <element signature="e#249#250#0" expanded="true" />
+            <element signature="e#267#268#0" expanded="true" />
+            <element signature="e#335#336#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+            <element signature="e#474#475#0" expanded="true" />
+            <element signature="e#529#530#0" expanded="true" />
+            <element signature="e#547#548#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+            <element signature="e#655#656#0" expanded="true" />
+            <element signature="e#712#713#0" expanded="true" />
+            <element signature="e#730#731#0" expanded="true" />
+            <element signature="e#801#802#0" expanded="true" />
+            <element signature="e#819#820#0" expanded="true" />
+            <element signature="e#877#878#0" expanded="true" />
+            <element signature="e#896#897#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DatabasePackage/DatabaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="101" column="9" lean-forward="true" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

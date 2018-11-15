@@ -17,7 +17,21 @@ public class DatabaseController implements iDatabaseController
 	private static PreparedStatement preparedStatement;
 	private static ResultSet resultSet;
 
-	public DatabaseController(){}
+	private static iDatabaseController databaseController = null;
+
+	// private constructor restricted to this class itself
+	private DatabaseController(){ }
+
+	// static method to create instance of DatabaseController class
+	public static iDatabaseController getDatabaseController()
+	{
+		if (databaseController == null)
+		{
+			databaseController = new DatabaseController();
+		}
+
+		return databaseController;
+	}
 
 	private boolean open()
 	{
@@ -70,6 +84,36 @@ public class DatabaseController implements iDatabaseController
 
 		return success;
 	}
+
+//	private PreparedStatement prepareStatement(PreparedStatement preparedStatement, Connection connection, String query, Object[] parameters) throws SQLException
+//	{
+//		try
+//		{
+//			preparedStatement = connection.prepareStatement(query);
+//
+//			for(Object parameter : parameters)
+//			{
+//				if(parameter instanceof Integer)
+//				{
+//
+//				}
+//				preparedStatement.setInt(1, votingEntityId);
+//			}
+//		}
+//		catch(SQLException exception)
+//		{
+//			close();
+//			throw exception;
+//		}
+//	}
+
+//	private ResultSet runQuery(String query)
+//	{
+//		try
+//		{
+//			open();
+//		}
+//	}
 
 	@Override
 	public List<iVotingEntity> getVotingEntities()
