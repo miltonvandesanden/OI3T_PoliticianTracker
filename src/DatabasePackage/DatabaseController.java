@@ -438,11 +438,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iIssue addIssue(iIssue issue)
 	{
-		if(getIssue(issue.getName(), issue.getDescription()) != null)
-		{
-			return null;
-		}
-
 		iIssue result = null;
 		String query = "INSERT INTO issue (name, description) VALUES (?, ?);";
 
@@ -481,11 +476,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iIssue setIssue(int issueId, iIssue issue)
 	{
-		if(getIssue(issueId) == null)
-		{
-			return null;
-		}
-
 		iIssue result = null;
 		String query = "UPDATE issue SET name=?, description=? WHERE idIssue=?";
 
@@ -525,16 +515,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public boolean deleteIssue(int issueId)
 	{
-		if(getIssue(issueId) == null)
-		{
-			return false;
-		}
-
-		if(!getStancesOfIssue(issueId).isEmpty())
-		{
-			return false;
-		}
-
 		boolean success = false;
 		String query = "DELETE FROM issue WHERE idIssue=?";
 

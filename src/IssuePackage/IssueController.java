@@ -68,6 +68,11 @@ public class IssueController implements iIssueController
 			return false;
 		}
 
+		if(!databaseController.getStancesOfIssue(issueId).isEmpty())
+		{
+			return false;
+		}
+
 		return databaseController.deleteIssue(issueId);
 	}
 }
