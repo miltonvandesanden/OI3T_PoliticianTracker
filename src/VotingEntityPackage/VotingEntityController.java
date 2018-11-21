@@ -69,6 +69,11 @@ public class VotingEntityController implements iVotingEntityController
 			return false;
 		}
 
+		if(!databaseController.getStancesOfVotingEntity(votingEntityId).isEmpty())
+		{
+			return false;
+		}
+
 		return databaseController.deleteVotingEntity(votingEntityId);
 	}
 }

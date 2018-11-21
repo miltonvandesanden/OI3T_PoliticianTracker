@@ -206,11 +206,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iVotingEntity addVotingEntity(iVotingEntity votingEntity)
 	{
-		if(getVotingEntity(votingEntity.getName(), votingEntity.getDateOfFounding()) != null)
-		{
-			return null;
-		}
-
 		iVotingEntity result = null;
 		String query = "INSERT INTO votingentity (name, dateOfFounding) VALUES (?, ?);";
 
@@ -249,11 +244,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iVotingEntity setVotingEntity(int votingEntityId, iVotingEntity votingEntity)
 	{
-		if(getVotingEntity(votingEntityId) == null)
-		{
-			return null;
-		}
-
 		iVotingEntity result = null;
 		String query = "UPDATE votingentity SET name=?, dateOfFounding=? WHERE idVotingEntity=?";
 
@@ -293,16 +283,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public boolean deleteVotingEntity(int votingEntityId)
 	{
-		if(getVotingEntity(votingEntityId) == null)
-		{
-			return false;
-		}
-
-		if(!getStancesOfVotingEntity(votingEntityId).isEmpty())
-		{
-			return false;
-		}
-
 		boolean result = false;
 		String query = "DELETE FROM votingentity WHERE idVotingEntity=?";
 
