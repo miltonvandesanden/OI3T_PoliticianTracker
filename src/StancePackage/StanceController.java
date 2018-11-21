@@ -19,48 +19,78 @@ public class StanceController implements iStanceController
 	@Override
 	public List<iStance> getStancesOfVotingEntity(int votingEntityId)
 	{
-		return null;
+		return databaseController.getStancesOfVotingEntity(votingEntityId);
 	}
 
 	@Override
 	public List<iStance> getStancesOfIssue(int issueId)
 	{
-		return null;
+		return databaseController.getStancesOfIssue(issueId);
 	}
 
 	@Override
 	public List<iStance> getStancesOfVotingEntityAndIssue(int votingEntityId, int issueId)
 	{
-		return null;
+		return databaseController.getStancesOfVotingEntityAndIssue(votingEntityId, issueId);
 	}
 
 	@Override
 	public iStance getStance(int stanceId)
 	{
-		return null;
+		return databaseController.getStance(stanceId);
 	}
 
 	@Override
 	public iStance getStance(int votingEntityId, int issueId, LocalDate date)
 	{
-		return null;
+		return databaseController.getStance(votingEntityId, issueId, date);
 	}
 
 	@Override
 	public iStance addStance(iStance stance)
 	{
-		return null;
+		if(databaseController.getVotingEntity(stance.getVotingEntityId()) == null)
+		{
+			return null;
+		}
+
+		if(databaseController.getIssue(stance.getIssueId()) == null)
+		{
+			return null;
+		}
+
+		if(databaseController.getStance(stance.getVotingEntityId(), stance.getIssueId(), stance.getDate()) != null)
+		{
+			return null;
+		}
+
+		return databaseController.addStance(stance);
 	}
 
 	@Override
 	public iStance setStance(int stanceId, iStance stance)
 	{
-		return null;
+		if(databaseController.getStance(stanceId) == null)
+		{
+			return null;
+		}
+
+		if(databaseController.getVotingEntity(stance.getVotingEntityId()) == null)
+		{
+			return null;
+		}
+
+		if(databaseController.getIssue(stance.getIssueId()) == null)
+		{
+			return null;
+		}
+
+		return databaseController.setStance(stanceId, stance);
 	}
 
 	@Override
 	public boolean deleteStance(int stanceId)
 	{
-		return false;
+		return databaseController.deleteStance(stanceId);
 	}
 }

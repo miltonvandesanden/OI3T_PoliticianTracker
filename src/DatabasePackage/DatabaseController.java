@@ -85,36 +85,6 @@ public class DatabaseController implements iDatabaseController
 		return success;
 	}
 
-//	private PreparedStatement prepareStatement(PreparedStatement preparedStatement, Connection connection, String query, Object[] parameters) throws SQLException
-//	{
-//		try
-//		{
-//			preparedStatement = connection.prepareStatement(query);
-//
-//			for(Object parameter : parameters)
-//			{
-//				if(parameter instanceof Integer)
-//				{
-//
-//				}
-//				preparedStatement.setInt(1, votingEntityId);
-//			}
-//		}
-//		catch(SQLException exception)
-//		{
-//			close();
-//			throw exception;
-//		}
-//	}
-
-//	private ResultSet runQuery(String query)
-//	{
-//		try
-//		{
-//			open();
-//		}
-//	}
-
 	@Override
 	public List<iVotingEntity> getVotingEntities()
 	{
@@ -858,21 +828,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iStance addStance(iStance stance)
 	{
-		if(getVotingEntity(stance.getVotingEntityId()) == null)
-		{
-			return null;
-		}
-
-		if(getIssue(stance.getIssueId()) == null)
-		{
-			return null;
-		}
-
-		if(getStance(stance.getVotingEntityId(), stance.getIssueId(), stance.getDate()) != null)
-		{
-			return null;
-		}
-
 		iStance result = null;
 		String query = "INSERT INTO stance (VotingEntity_idVotingEntity, Issue_idIssue, inFavor, date) VALUES (?, ?, ?, ?);";
 
@@ -913,21 +868,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public iStance setStance(int stanceId, iStance stance)
 	{
-		if(getStance(stanceId) == null)
-		{
-			return null;
-		}
-
-		if(getVotingEntity(stance.getVotingEntityId()) == null)
-		{
-			return null;
-		}
-
-		if(getIssue(stance.getIssueId()) == null)
-		{
-			return null;
-		}
-
 		iStance result = null;
 		String query = "UPDATE stance SET VotingEntity_idVotingEntity=?, Issue_idIssue=?, inFavor=?, date=? WHERE idStance=?";
 
@@ -968,11 +908,6 @@ public class DatabaseController implements iDatabaseController
 	@Override
 	public boolean deleteStance(int stanceId)
 	{
-		if(getStance(stanceId) == null)
-		{
-			return false;
-		}
-
 		boolean success = false;
 		String query = "DELETE FROM stance WHERE idStance=?";
 
