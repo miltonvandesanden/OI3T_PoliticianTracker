@@ -100,7 +100,12 @@ public class DatabaseController implements iDatabaseController
 
 			while(resultSet.next())
 			{
-				iVotingEntity votingEntity = new VotingEntity(resultSet.getInt("idVotingEntity"), resultSet.getString("name"), resultSet.getDate("dateOfFounding").toLocalDate());
+				iVotingEntity votingEntity = new VotingEntity
+					(
+						resultSet.getInt("idVotingEntity"),
+						resultSet.getString("name"),
+						resultSet.getDate("dateOfFounding").toLocalDate()
+					);
 
 				votingEntities.add(votingEntity);
 			}
@@ -141,7 +146,12 @@ public class DatabaseController implements iDatabaseController
 
 			if(resultSet.first())
 			{
-				votingEntity = new VotingEntity(votingEntityId, resultSet.getString("name"), resultSet.getDate("dateOfFounding").toLocalDate());
+				votingEntity = new VotingEntity
+					(
+						votingEntityId,
+						resultSet.getString("name"),
+						resultSet.getDate("dateOfFounding").toLocalDate()
+					);
 			}
 		}
 		catch(Exception exception)
