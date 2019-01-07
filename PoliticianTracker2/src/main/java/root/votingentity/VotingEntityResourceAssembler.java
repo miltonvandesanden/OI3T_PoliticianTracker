@@ -3,6 +3,7 @@ package root.votingentity;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
+import root.issue.IssueController;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -10,12 +11,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Component
 public class VotingEntityResourceAssembler implements ResourceAssembler<VotingEntity, Resource<VotingEntity>>
 {
-	private boolean withSelf = true;
-	private boolean withParent = true;
+	private boolean withSelf = false;
+	private boolean withIssues = false;
+	private boolean withParent = false;
 
-	public Resource<VotingEntity> getResource(boolean withSelf, boolean withParent, VotingEntity votingEntity)
+	public Resource<VotingEntity> getResource(boolean withSelf, boolean withIssues, boolean withParent, VotingEntity votingEntity)
 	{
 		this.withSelf = withSelf;
+		this.withIssues = withIssues;
 		this.withParent = withParent;
 
 		return toResource(votingEntity);
@@ -33,6 +36,11 @@ public class VotingEntityResourceAssembler implements ResourceAssembler<VotingEn
 		if(withSelf)
 		{
 			resourceVotingEntity.add(linkTo(methodOn(VotingEntityController.class).getVotingEntity(votingEntity.getId())).withSelfRel());
+		}
+
+		if(withIssues)
+		{
+			resourceVotingEntity.add(linkTo(methodOn(IssueController.class).getIssuesFromVotingEntity(votingEntity.getId())).withRel("issues"));
 		}
 
 		if(withParent)
